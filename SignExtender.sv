@@ -1,4 +1,4 @@
-module SignExtension(a, result);
+module SignExtender(a, result);
     input [15:0] a;         // 16-bit input
     output [31:0] result;   // 32-bit output
     reg [31:0] result;      // Define result as a register to use in always block
