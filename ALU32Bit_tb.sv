@@ -8,6 +8,7 @@ module ALU32Bit_tb;
     // Outputs
     wire [31:0] result;        // 32-bit result
     wire cout;                 // Carry-out
+    wire zero;                 // zero flag
 
     // Instantiate the ALU32Bit module
     ALU32Bit uut (
@@ -16,7 +17,8 @@ module ALU32Bit_tb;
         .op(op),
         .cin(cin),
         .result(result),
-        .cout(cout)
+        .cout(cout),
+        .zero(zero)
     );
 
     initial begin
