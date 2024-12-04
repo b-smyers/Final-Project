@@ -5,11 +5,24 @@ module InstructionMemory(Address, Clk, Instruction);
 
   reg [31:0] memory [15:0]; // 16 words of memory
 
-  // Load instructions here
-  // initial begin
-    // memory[0] = 32'h2468ACEF;
-    // etc.
-  // end
+  initial begin
+    memory[8'h0] = 32'b0;
+    memory[8'h4] = 32'b0;
+    memory[8'h8] = 32'b0;
+    memory[8'hc] = 32'b0;
+    memory[8'h10] = 32'b0;
+    memory[8'h14] = 32'b0;
+    memory[8'h18] = 32'b0;
+    memory[8'h1c] = 32'b0;
+    memory[8'h20] = 32'b0;
+    memory[8'h24] = 32'b0;
+    memory[8'h28] = 32'b0;
+    memory[8'h2c] = 32'b0;
+    memory[8'h30] = 32'b0;
+    memory[8'h34] = 32'b0;
+    memory[8'h38] = 32'b0;
+    memory[8'h3c] = 32'b0;
+  end
 
   always @(posedge Clk) begin
     Instruction <= memory[Address];
