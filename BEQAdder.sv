@@ -1,4 +1,4 @@
-module BEQAdder(ValueIn1, ValueIn2, ValueOut, Zero);
+module BEQAdder(ValueIn1, ValueIn2, ValueOut);
     input [31:0] ValueIn1, ValueIn2;  // 32-bit inputs
     output [31:0] ValueOut;          // 32-bit output (sum of inputs)
 
