@@ -26,6 +26,12 @@ module Control (opcode, funct, ALUSrc, RegDst, MemWrite, MemRead, Beq, Bne, Jump
                 ALUOp = 2'b10;
                 RegWrite = 1;
             end
+            // ADDI
+            6'b001000: begin
+                ALUSrc = 1;
+                ALUOp = 2'b10;
+                RegWrite = 1;
+            end
             // STORE WORD
             6'b101011: begin
                 ALUSrc = 1;
