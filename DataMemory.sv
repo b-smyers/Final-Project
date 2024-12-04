@@ -1,5 +1,5 @@
 module DataMemory(
-    input [6:0] Address,        // 7-bit address input
+    input [31:0] Address,        // 32-bit address input
     input [31:0] WriteData,     // 32-bit data to be written
     input MemRead,              // Control signal for reading
     input MemWrite,             // Control signal for writing

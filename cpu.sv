@@ -19,7 +19,7 @@ module cpu(pcClk, clk);
 
   wire [31:0] memMuxRes;
   wire ALUSrc, RegDst, MemWrite, MemRead, Beq, Bne, Jump, MemToReg, RegWrite;
-  wire [1:0] ALUControl;
+  wire [2:0] ALUControl;
   Control control(
     .opcode(instr[31:26]),
     .funct(instr[5:0]),
@@ -74,7 +74,7 @@ module cpu(pcClk, clk);
     .a(data1),
     .b(aluB),
     .op(ALUControl),
-    .cin(), // No carry in
+    .cin(1'b0), // No carry in
     .result(aluRes),
     .cout(),
     .zero(zero)
