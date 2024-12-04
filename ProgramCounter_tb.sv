@@ -24,8 +24,9 @@ module ProgramCounter_tb;
     initial begin
         $display("Starting Testbench for ProgramCounter...");
 
-        // Initialize PCOut
-        PCOut = 32'd0;
+        // Initialize Program Counter
+        PCIn = 32'd0;
+        #10;
 
         // Test Case 1: Set PC to 0x00000004
         PCIn = 32'h00000004;
