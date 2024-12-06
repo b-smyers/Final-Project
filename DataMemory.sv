@@ -1,5 +1,5 @@
 module DataMemory(
-    input [31:0] Address,        // 32-bit address input
+    input [31:0] Address,      // 32-bit address input
     input [31:0] WriteData,     // 32-bit data to be written
     input MemRead,              // Control signal for reading
     input MemWrite,             // Control signal for writing
@@ -7,8 +7,13 @@ module DataMemory(
     output reg [31:0] ReadData  // 32-bit data output
 );
 
-    // Declare memory array with 128 words, each 32 bits wide
-    reg [31:0] memory [127:0];
+    reg [31:0] memory [0:16499];
+    integer i;
+    initial begin
+      for (i = 0; i < 16500; i = i + 1) begin
+        memory[i] = 32'd0;
+      end
+    end
 
     // Asynchronous read
     always @(*) begin
@@ -27,3 +32,4 @@ module DataMemory(
     end
 
 endmodule
+

@@ -16,7 +16,7 @@ module cpu(pcClk, clk);
     .Clk(clk),
     .Instruction(instr)
   );
-
+ 
   wire [31:0] memMuxRes;
   wire ALUSrc, RegDst, MemWrite, MemRead, Beq, Bne, Jump, MemToReg, RegWrite;
   wire [2:0] ALUControl;
@@ -30,7 +30,8 @@ module cpu(pcClk, clk);
     .Beq(Beq),
     .Bne(Bne),
     .Jump(Jump),
-    .MemToReg(RegWrite),
+    .MemToReg(MemToReg),
+    .RegWrite(RegWrite),
     .ALUControl(ALUControl)
   );
 
@@ -121,7 +122,7 @@ module cpu(pcClk, clk);
   Mux32Bit2To1 branchMux(
     .a(pcPlusFour), // PC + 4
     .b(branchAddr),
-    .op((Bne | Beq) & zero), // Branch and ALU Zero
+    .op((Beq & zero) | (Bne & !zero)), // Branch and ALU Zero
     .result(newBranchAddr)
   );
 
@@ -133,10 +134,11 @@ module cpu(pcClk, clk);
 
   assign jumpAddr[31:28] = pcPlusFour[31:28];
 
-  Mux32Bit2To1 newPCAddrMux(
+  Mux32Bit2To1 jumpMux(
     .a(newBranchAddr),
     .b(jumpAddr),
     .op(Jump),
     .result(PCIn)
   );
 endmodule
+

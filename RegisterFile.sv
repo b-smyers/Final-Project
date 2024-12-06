@@ -6,7 +6,14 @@ module RegisterFile(
 );
 
     // Define a register array with 32 registers, each 32 bits wide
-    reg [31:0] registers [31:0];
+  	reg [31:0] registers [0:31];
+  
+    integer i;
+    initial begin
+      for (i = 0; i < 32; i = i + 1) begin
+        registers[i] = 32'd0;
+      end
+    end
 
     // Asynchronous read operations
     assign ReadData1 = (ReadRegister1 == 5'b00000) ? 32'b0 : registers[ReadRegister1];
@@ -20,3 +27,4 @@ module RegisterFile(
     end
 
 endmodule
+

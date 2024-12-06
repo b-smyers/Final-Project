@@ -1,9 +1,9 @@
 module Control (opcode, funct, ALUSrc, RegDst, MemWrite, MemRead, Beq, Bne, Jump, MemToReg, RegWrite, ALUControl);
     input [5:0] opcode;
-    input [5:0] funct;
+    input reg [5:0] funct;
     output reg ALUSrc, RegDst, MemWrite, MemRead, Beq, Bne, Jump, MemToReg, RegWrite;
     output reg [2:0] ALUControl;
-
+  
     reg [1:0] ALUOp;
 
     always @(*) begin
@@ -20,7 +20,7 @@ module Control (opcode, funct, ALUSrc, RegDst, MemWrite, MemRead, Beq, Bne, Jump
         RegWrite = 0;
 
         case (opcode)
-            // R-type (add, sub)
+          	// R-type (add, sub, and, or)
             6'b000000: begin
                 RegDst = 1;
                 ALUOp = 2'b10;
@@ -74,10 +74,11 @@ module Control (opcode, funct, ALUSrc, RegDst, MemWrite, MemRead, Beq, Bne, Jump
              6'b100100: ALUControl = 3'b000; // and
              6'b100101: ALUControl = 3'b001; // or
              6'b101010: ALUControl = 3'b111; // set on less than (slt)
-             default:   ALUControl = 3'bxxx; // undefined operation
+             default:   ALUControl = 3'b010; // undefined operation
            endcase
         end
         default: ALUControl = 3'bxxx; // undefined ALUOp
       endcase
     end
 endmodule
+

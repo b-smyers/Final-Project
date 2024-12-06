@@ -1,4 +1,3 @@
-`timescale 1ns/1ps
 module cpu_tb;
   reg pcClk;
   reg clk;
@@ -12,28 +11,41 @@ module cpu_tb;
   // Clock generation for pcClk (slower clock)
   initial begin
     pcClk = 0;
-    forever #20 pcClk = ~pcClk; // 50 MHz clock
+    forever #10 pcClk = ~pcClk;
   end
 
   // Clock generation for clk (faster clock)
   initial begin
     clk = 0;
-    forever #10 clk = ~clk; // 100 MHz clock
+    forever #5 clk = ~clk;
   end
 
   // Memory preloading with instructions
   initial begin
     $display("Loading instructions into Instruction Memory...");
-    uut.im.memory[8'h0] = 32'b00100000000010000000000000000101; // addi $t0, $zero, 5
-    uut.im.memory[8'h4] = 32'b00100000000010010000000000001010; // addi $t1, $zero, 10
-    uut.im.memory[8'h8] = 32'b00000001000010010101000000100000; // add $t2, $t0, $t1
-    uut.im.memory[8'hc] = 32'b00010001010000000000000000000010; // beq $t2, $zero, LABEL
-    uut.im.memory[8'h10] = 32'b10101100000010100000000000000000; // sw $t2, 0($zero)
-    uut.im.memory[8'h14] = 32'b00001000000000000000000000000110; // j END
-    uut.im.memory[8'h18] = 32'b00100000000010110000000011111111; // addi $t3, $zero, -1 (LABEL)
+    uut.im.memory[32'h00001000] = 32'b00100000000000010010000000000000;
+    uut.im.memory[32'h00001004] = 32'b00100000000000100011000000000000;
+    uut.im.memory[32'h00001008] = 32'b00100000000001000000000000000000;
+    uut.im.memory[32'h0000100c] = 32'b00100000000001010000000000000000;
+    uut.im.memory[32'h00001010] = 32'b00000000101000010011000000100000;
+    uut.im.memory[32'h00001014] = 32'b00000000000001100010100000100000;
+    uut.im.memory[32'h00001018] = 32'b00100000100001100000000000000001;
+    uut.im.memory[32'h0000101c] = 32'b00000000000001100000010000000100;
+    uut.im.memory[32'h00001020] = 32'b00010100100000100001000000010000;
+    uut.im.memory[32'h00001024] = 32'b10101100101000110000000000000000;
+    
+    // Load address into register $3
+    $display("Loading address into register...");
+    uut.dataMem.memory[32'h00004000] = 32'h00004000;
+    
+    // Initializing Program Counter
+    $display("Setting program counter...");
+    uut.pc.PCOut = 32'h00001000;
+    
     $monitor("Time=%0t, PC=%h, Instruction=%h", $time, uut.PCOut, uut.im.Instruction);
-    #500;
+    $dumpfile("dump.vcd");
+    $dumpvars;
+    #600;
     $finish;
   end
 endmodule
-
