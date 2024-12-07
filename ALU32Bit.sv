@@ -14,7 +14,7 @@ module ALU32Bit(a, b, op, cin, result, cout, zero);
         .a(a[15:0]),
         .b(b[15:0]),
         .op(op),
-        .cin(cin),
+        .cin((op == 3'b110) ? 1'b1 : 1'b0),
         .result(result[15:0]),
         .cout(c)
     );
@@ -27,5 +27,6 @@ module ALU32Bit(a, b, op, cin, result, cout, zero);
         .result(result[31:16]),
         .cout(cout)
     );
-   assign zero = (result == 32'b0) ? 1'b1 : 1'b0;
+  
+    assign zero = (result == 32'b0) ? 1'b1 : 1'b0;
 endmodule
